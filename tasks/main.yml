@@ -1,15 +1,18 @@
-- name: ensure ioncube 4.5.3
-  copy: src=ioncube_loader_lin_5.3.so dest=/usr/lib/php5/20090626/
-  sudo: yes
+---
+- name: get php version
+  shell: php -v | grep ^PHP | awk '{print $2}'| awk -F. '{print $1 "." $2}'
+  register: php_version
 
-- name: ensure ioncube conf.
-  copy: src=20-ioncube.ini dest=/etc/php5/apache2/conf.d/
-  sudo: yes
+- name: Create ioncube library directory
+  file: path=/usr/lib/ioncube state=directory
 
-- name: ensure phpinfo()
-  copy: src=phpinfo.php dest=/var/www/phpi.php
-  sudo: yes
+- name: Install ioncube 
+  copy: src="{{role_path}}/files/ioncube_loader_lin_{{php_version.stdout}}.so"  dest="/usr/lib/ioncube/"
+  notify:
+    - restart apache
 
-- name: ensure apache2 restarted
-  service: name=apache2 state=restarted
-  sudo: yes
+- name: Install ioncube config
+  copy: src="{{role_path}}/files/10-ioncube.ini" dest="/etc/php5/apache2/conf.d/"
+  notify:
+    - restart apache
+
