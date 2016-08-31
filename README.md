@@ -1,14 +1,17 @@
 # Installs ionCube Loader on a LAMP stack
 
-![screenshot](https://raw.github.com/vivaserver/ansible-ioncube/master/screenshot.png)
+![screenshot](https://raw.github.com/fang64/ansible-ioncube/master/screenshot.png)
 
-This Ansible Galaxy role installs the [ionCube Loader][ion] on a LAMP stack. This loader is required to run some encoded PHP applications such as [WHMCS][whmcs].
+This Ansible Galaxy role installs the [ionCube Loader][ion] on a LAMP stack. This loader is required to run some encoded PHP applications such as [Blesta][blesta] and [WHMCS][whmcs].
 
-Since the ionCube Loader version depends on the specific PHP version installed, this role has as a dependency the the PHP 5.3 package of the [vivaserver.lamp][lamp] role. Other PHP versions might require a different loader version, so they're not supported by this role.
+Since the ionCube Loader version depends on the specific PHP version installed, check the [ionCube Loader Chart][ion_support]. 
 
 ## Requirements
 
-Ubuntu 12.04 "Precise Pangolin", including [elementaryOS][eos] 0.2 "Luna".
+Ubuntu 12.04 "Precise Pangolin"
+Ubuntu 14.04 "Trusty Tahr"
+Debian 8 "Jessie"
+[elementaryOS][eos] 0.2 "Luna"
 
 ## Dependencies
 
@@ -20,7 +23,7 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-         - vivaserver.ioncube
+         - viveserver.ioncube
 
 ## License
 
@@ -29,8 +32,11 @@ MIT
 ## Copyright
 
 (c)2014 Cristian R. Arroyo
+(c)2016 Roy Williams
 
 [ion]: http://www.ioncube.com/loaders.php
+[ion_support]: https://www.ioncube.com/loaders/support_comparison.php
 [lamp]: https://github.com/vivaserver/ansible-lamp
 [whmcs]: http://www.whmcs.com/ 
+[blesta]: http://www.blesta.com/
 [eos]: http://elementaryos.org
