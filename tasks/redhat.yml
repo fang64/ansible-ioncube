@@ -1,0 +1,10 @@
+---
+- stat: path=/etc/php.d
+  register: php_install
+
+- name: Install ioncube php apache2 config
+  when: php_install.stat.isdir is defined and php_install.stat.isdir
+  template: src="{{role_path}}/templates/05-ioncube.ini" dest="/etc/php.d/" 
+  notify:
+    - restart apache
+

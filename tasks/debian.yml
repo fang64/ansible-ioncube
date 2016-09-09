@@ -1,0 +1,31 @@
+---
+- stat: path=/etc/php
+  register: php_install
+
+- name: Install ioncube php apache2 config
+  when: php_install.stat.isdir is defined and php_install.stat.isdir
+  template: src="{{role_path}}/templates/05-ioncube.ini" dest="/etc/php/{{php_version.stdout}}/apache2/conf.d/" 
+  notify:
+    - restart apache
+
+- name: Install ioncube php cli config
+  when: php_install.stat.isdir is defined and php_install.stat.isdir
+  template: src="{{role_path}}/templates/05-ioncube.ini" dest="/etc/php/{{php_version.stdout}}/cli/conf.d/" 
+  notify:
+    - restart apache
+
+- stat: path=/etc/php5
+  register: php5_install
+
+- name: Install ioncube php apache2 config alt path
+  when: php5_install.stat.isdir is defined and php5_install.stat.isdir
+  template: src="{{role_path}}/templates/05-ioncube.ini" dest="/etc/php5/apache2/conf.d/" 
+  notify:
+    - restart apache
+
+- name: Install ioncube php cli config alt path
+  when: php5_install.stat.isdir is defined and php5_install.stat.isdir
+  template: src="{{role_path}}/templates/05-ioncube.ini" dest="/etc/php5/cli/conf.d/" 
+  notify:
+    - restart apache
+

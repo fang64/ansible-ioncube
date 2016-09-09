@@ -11,33 +11,9 @@
   notify:
     - restart apache
 
-- stat: path=/etc/php
-  register: php_install
+- include: tasks/debian.yml
+  when: ansible_os_family == "Debian"
 
-- name: Install ioncube php apache2 config
-  when: php_install.stat.isdir == true
-  template: src="{{role_path}}/templates/05-ioncube.ini" dest="/etc/php/{{php_version.stdout}}/apache2/conf.d/" 
-  notify:
-    - restart apache
-
-- name: Install ioncube php cli config
-  when: php_install.stat.isdir == true
-  template: src="{{role_path}}/templates/05-ioncube.ini" dest="/etc/php/{{php_version.stdout}}/cli/conf.d/" 
-  notify:
-    - restart apache
-
-- stat: path=/etc/php5
-  register: php5_install
-
-- name: Install ioncube php apache2 config alt path
-  when: php_install.stat.isdir == true
-  template: src="{{role_path}}/templates/05-ioncube.ini" dest="/etc/php5/apache2/conf.d/" 
-  notify:
-    - restart apache
-
-- name: Install ioncube php cli config alt path
-  when: php_install.stat.isdir == true
-  template: src="{{role_path}}/templates/05-ioncube.ini" dest="/etc/php5/cli/conf.d/" 
-  notify:
-    - restart apache
+- include: tasks/redhat.yml
+  when: ansible_os_family == "RedHat"
 
