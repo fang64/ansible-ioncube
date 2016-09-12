@@ -5,12 +5,19 @@ galaxy_info:
   license: MIT
   min_ansible_version: 1.4
   platforms:
+    - name: EL
+      versions:
+        - 6
+        - 7
     - name: Ubuntu
       versions:
         - precise
         - trusty
+        - xenial
     - name: Debian
       versions:
-        - 8
+        - wheezy
+        - jessie
   categories:
     - web
+dependencies: []
